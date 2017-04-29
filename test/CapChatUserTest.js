@@ -5,9 +5,10 @@ const keys = require('signal-protocol').KeyHelper;
 
 contract('CapChatUser', accounts => {
   // mock data
-  let alice, bob;
   const emptyKey = Buffer.from(new ArrayBuffer(32)).toString('hex');
   const NUM_OTPKS = 5;
+  let alice;
+  let bob;
 
   // functions
   const func = {
