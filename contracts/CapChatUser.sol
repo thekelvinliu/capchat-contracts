@@ -1,8 +1,7 @@
 pragma solidity ^0.4.8;
 
-// import './CapChatLogic.sol';
-
 /// @title CapChatUser
+/// @author thekelvinliu <kelvin@thekelvinliu.com>
 contract CapChatUser {
   // variables
   address owner;
@@ -15,19 +14,14 @@ contract CapChatUser {
   uint otpkIndex;
   mapping (address => bool) friends;
 
-  // events
-  // event RegistrationFailed();
-  // event RegistrationPassed();
-  event FriendAdded(address friend);
-  event FriendRemoved(address friend);
-  event OneTimePreKey(bytes32 otpk);
-  event OneTimePreKeysDepleted();
-  event OneTimePreKeysLow(uint count);
-  event OneTimePreKeysUpdated(uint count);
-  event SignedPreKeyUpdated();
-  event Unauthorized(address from, string action);
-
   // constructor
+  /// initializes a user contract
+  /// @param _username the username for this contract
+  /// @param _registrationID the registrationID for this contract
+  /// @param _identityKey the long-term public identity key for this contract
+  /// @param _signedPreKey the medium-term signed public prekey for this contract
+  /// @param _signedPreKeySig the signature of the public prekey
+  /// @param _oneTimePreKeys an array of one-time prekeys
   function CapChatUser(
     bytes32 _username,
     uint16 _registrationID,
@@ -44,6 +38,18 @@ contract CapChatUser {
     signedPreKeySig = _signedPreKeySig;
     oneTimePreKeys = _oneTimePreKeys;
   }
+
+  // events
+  // event RegistrationFailed();
+  // event RegistrationPassed();
+  event FriendAdded(address friend);
+  event FriendRemoved(address friend);
+  event OneTimePreKey(bytes32 otpk);
+  event OneTimePreKeysDepleted();
+  event OneTimePreKeysLow(uint count);
+  event OneTimePreKeysUpdated(uint count);
+  event SignedPreKeyUpdated();
+  event Unauthorized(address from, string action);
 
   // functions
   // returns this contract's signedPreKeySig
