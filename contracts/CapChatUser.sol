@@ -6,8 +6,7 @@ pragma solidity ^0.4.8;
 contract CapChatUser {
   // variables
   address owner;
-  address public ccAddress;
-  string username;
+  bytes32 username;
   uint16 registrationID;
   bytes32 public identityKey;
   bytes32 public signedPreKey;
@@ -30,8 +29,7 @@ contract CapChatUser {
 
   // constructor
   function CapChatUser(
-    address _ccAddress,
-    string _username,
+    bytes32 _username,
     uint16 _registrationID,
     bytes32 _identityKey,
     bytes32 _signedPreKey,
@@ -39,7 +37,6 @@ contract CapChatUser {
     bytes32[] _oneTimePreKeys
   ) {
     owner = msg.sender;
-    ccAddress = _ccAddress;
     username = _username;
     registrationID = _registrationID;
     identityKey = _identityKey;
@@ -141,7 +138,7 @@ contract CapChatUser {
       // owner cannot be zero address
       owner != address(0x0)
       // username cannot be empty string
-      && bytes(username).length > 0
+      && username != bytes32('')
       // registrationID cannot be zero
       && registrationID != 0
       // public keys and signature cannot be zero
@@ -150,9 +147,7 @@ contract CapChatUser {
       && signedPreKeySig[0] != bytes32(0)
       && signedPreKeySig[1] != bytes32(0)
       // oneTimePreKeys must have at least 3 keys
-      && oneTimePreKeys.length > 2
-      // CapChat address cannot be zero address
-      && ccAddress != address(0x0);
+      && oneTimePreKeys.length > 2;
     // ensure none of the keys in oneTimePreKeys is zero
     for (uint i = 0; i < oneTimePreKeys.length; i++)
       valid = valid && oneTimePreKeys[i] != bytes32(0);

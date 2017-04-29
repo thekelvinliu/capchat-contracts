@@ -6,7 +6,6 @@ const keys = require('signal-protocol').KeyHelper;
 contract('CapChatUser', accounts => {
   // mock data
   let alice, bob;
-  const cc = 0xFEEDFADE;
   const emptyKey = Buffer.from(new ArrayBuffer(32)).toString('hex');
   const NUM_OTPKS = 5;
 
@@ -71,7 +70,6 @@ contract('CapChatUser', accounts => {
       };
       // create actual instances
       user.instance = await CapChatUser.new(
-        cc,
         user.username,
         user.registrationID,
         `0x${user.strings.identityKey}`,
@@ -430,8 +428,8 @@ contract('CapChatUser', accounts => {
         user.registrationID,
         `0x${user.strings.identityKey}`,
         `0x${user.strings.signedPreKey}`,
-        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`),
-        cc
+        user.strings.signedPreKeySig.map(sig => `0x${sig}`),
+        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`)
       );
       assert.isFalse(await ccu.isValid());
     });
@@ -441,8 +439,8 @@ contract('CapChatUser', accounts => {
         0,
         `0x${user.strings.identityKey}`,
         `0x${user.strings.signedPreKey}`,
-        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`),
-        cc
+        user.strings.signedPreKeySig.map(sig => `0x${sig}`),
+        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`)
       );
       assert.isFalse(await ccu.isValid());
     });
@@ -452,8 +450,8 @@ contract('CapChatUser', accounts => {
         user.registrationID,
         `0x${emptyKey}`,
         `0x${user.strings.signedPreKey}`,
-        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`),
-        cc
+        user.strings.signedPreKeySig.map(sig => `0x${sig}`),
+        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`)
       );
       assert.isFalse(await ccu.isValid());
     });
@@ -463,8 +461,19 @@ contract('CapChatUser', accounts => {
         user.registrationID,
         `0x${user.strings.identityKey}`,
         `0x${emptyKey}`,
-        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`),
-        cc
+        user.strings.signedPreKeySig.map(sig => `0x${sig}`),
+        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`)
+      );
+      assert.isFalse(await ccu.isValid());
+    });
+    it('fails when signedPreKeySig is empty', async () => {
+      const ccu = await CapChatUser.new(
+        user.username,
+        user.registrationID,
+        `0x${user.strings.identityKey}`,
+        `0x${user.strings.signedPreKey}`,
+        user.strings.signedPreKeySig.map(sig => `0x${emptyKey}`),
+        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`)
       );
       assert.isFalse(await ccu.isValid());
     });
@@ -474,8 +483,8 @@ contract('CapChatUser', accounts => {
         user.registrationID,
         `0x${user.strings.identityKey}`,
         `0x${user.strings.signedPreKey}`,
-        user.strings.oneTimePreKeys.filter(otpk => false),
-        cc
+        user.strings.signedPreKeySig.map(sig => `0x${sig}`),
+        user.strings.oneTimePreKeys.filter(otpk => false)
       );
       assert.isFalse(await ccu.isValid());
     });
@@ -484,11 +493,11 @@ contract('CapChatUser', accounts => {
         user.username,
         user.registrationID,
         `0x${user.strings.identityKey}`,
-        `0x${emptyKey}`,
+        `0x${user.strings.signedPreKey}`,
+        user.strings.signedPreKeySig.map(sig => `0x${sig}`),
         user.strings.oneTimePreKeys
-          .filter((e, i) => i < 3)
-          .map(otpk => `0x${otpk}`),
-        cc
+          .filter((e, i) => i < 2)
+          .map(otpk => `0x${otpk}`)
       );
       assert.isFalse(await ccu.isValid());
     });
@@ -497,21 +506,10 @@ contract('CapChatUser', accounts => {
         user.username,
         user.registrationID,
         `0x${user.strings.identityKey}`,
-        `0x${emptyKey}`,
-        user.strings.oneTimePreKeys
-          .map((otpk, i) => `0x${(i % 2) ? otpk : emptyKey}`),
-        cc
-      );
-      assert.isFalse(await ccu.isValid());
-    });
-    it('fails when cc is zero', async () => {
-      const ccu = await CapChatUser.new(
-        user.username,
-        user.registrationID,
-        `0x${user.strings.identityKey}`,
         `0x${user.strings.signedPreKey}`,
-        user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`),
-        0x0
+        user.strings.signedPreKeySig.map(sig => `0x${sig}`),
+        user.strings.oneTimePreKeys
+          .map((otpk, i) => `0x${(i % 2) ? otpk : emptyKey}`)
       );
       assert.isFalse(await ccu.isValid());
     });
