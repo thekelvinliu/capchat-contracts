@@ -6,7 +6,13 @@
   "repository": "git@github.com:thekelvinliu/capchat-contracts.git",
   "author": "thekelvinliu <kelvin@thekelvinliu.com>",
   "license": "MIT",
+  "scripts": {
+    "compile": "truffle compile",
+    "docs": "doxity",
+    "test": "truffle test"
+  },
   "devDependencies": {
+    "@digix/doxity": "^0.4.4",
     "signal-protocol": "^0.0.6"
   }
 }
