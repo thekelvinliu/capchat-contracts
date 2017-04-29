@@ -1,7 +1,3 @@
-const CapChat = artifacts.require("./CapChat.sol");
-const CapChatUser = artifacts.require("./CapChatUser.sol");
+const CapChatRegistry = artifacts.require("./CapChatRegistry.sol");
 
-module.exports = deployer => {
-  deployer.deploy(CapChat);
-  deployer.link(CapChat, CapChatUser);
-};
+module.exports = deployer => deployer.deploy(CapChatRegistry);
