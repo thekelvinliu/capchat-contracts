@@ -1,6 +1,31 @@
 pragma solidity ^0.4.8;
 
+/// @title CapChatRegistry
+/// @author thekelvinliu <kelvin@thekelvinliu.com>
 contract CapChatLogic {
+  // variables
+  /// address of the deployed registry contract
+  address registry = 0x0;
+  /// the owner of this logic contract
+  address owner;
+  /// the semantic version number of this contract
+  uint8[3] version;
+
+  // constructor
+  function CapChatLogic() {
+    owner = msg.sender;
+  }
+
+  // events
+
+  // functions
+  function registerUser(bytes32 username, address caddr) {
+
+  }
+
+  function deregisterUser(bytes32 username) {
+
+  }
 }
 //   // variables
 //   // semantic versioning
