@@ -31,5 +31,6 @@ see the [doxity](https://github.com/DigixGlobal/doxity)-generated documentation 
 ## about
 capchat is my computer science capstone/senior project.
 it is meant to be a secure and usable messaging platform.
-this repository contains the ethereum smart contracts for capchat.  
+this repository contains the ethereum smart contracts for capchat.
+
 kelvin liu, nyu shanghai class of 2017.
