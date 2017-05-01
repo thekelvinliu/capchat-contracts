@@ -30,18 +30,21 @@ contract CapChatLogic is Logic {
   /// adds the given username and user contract to the registry contract
   /// @param username the username
   /// @param caddr the user contract
+  /// @return { "status": "true if the add was successful, otherwise false" }
   function registerUser(bytes32 username, address caddr) returns (bool status) {
     return CapChatRegistry(registry).add(username, caddr);
   }
 
   /// gets the given username from the registry contract
   /// @param username the username
+  /// @return { "caddr": "the corresponding user contract address" }
   function getUser(bytes32 username) returns (address caddr) {
     return CapChatRegistry(registry).get(username);
   }
 
   /// removes the given username from the registry contract
   /// @param username the username
+  /// @return { "status": "true if the remove was successful, otherwise false" }
   function deregisterUser(bytes32 username) returns (bool status) {
     return CapChatRegistry(registry).remove(username);
   }
