@@ -4,20 +4,31 @@ pragma solidity ^0.4.8;
 /// @author thekelvinliu <kelvin@thekelvinliu.com>
 contract CapChatUser {
   // variables
+  /// address of the deployed registry contract
+  address registry = 0x0;
+  /// owner of this user contract
   address owner;
+  /// the username associated with this contract
   bytes32 username;
+  /// the registration id associated with this contract
   uint16 registrationID;
+  /// the long-term public identity key associated with this contract
   bytes32 public identityKey;
+  /// the medium-term public signed public prekey associated with this contract
   bytes32 public signedPreKey;
+  /// the signature of the signed public prekey associated with this contract
   bytes32[2] signedPreKeySig;
+  /// the array of one-time prekeys associated with this contract
   bytes32[] oneTimePreKeys;
+  /// the index of the next one-time prekey to issue
   uint otpkIndex;
+  /// the mapping of friendly user contracts associated with this contract
   mapping (address => bool) friends;
 
   // constructor
   /// initializes a user contract
   /// @param _username the username for this contract
-  /// @param _registrationID the registrationID for this contract
+  /// @param _registrationID the registration id for this contract
   /// @param _identityKey the long-term public identity key for this contract
   /// @param _signedPreKey the medium-term signed public prekey for this contract
   /// @param _signedPreKeySig the signature of the public prekey (signed with the identity key)

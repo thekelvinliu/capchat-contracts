@@ -4,7 +4,7 @@ pragma solidity ^0.4.8;
 /// @author thekelvinliu <kelvin@thekelvinliu.com>
 contract CapChatRegistry {
   // variables
-  /// owner of this registry
+  /// owner of this registry contract
   address owner;
   /// address of the curent logic contract
   address public logicContract;
