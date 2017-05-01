@@ -25,7 +25,7 @@ see the [doxity](https://github.com/DigixGlobal/doxity)-generated documentation 
 - [ ] deploy
 
 ### `CapChatUser`
-- [ ] update unit tests
+- [x] update unit tests
 - [ ] hard code deployed registry address
 
 ## about
