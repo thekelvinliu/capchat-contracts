@@ -1,11 +1,14 @@
 pragma solidity ^0.4.8;
 
+import './CapChatRegistry.sol';
+import './Logic.sol';
+
 /// @title CapChatUser
 /// @author thekelvinliu <kelvin@thekelvinliu.com>
 contract CapChatUser {
   // variables
   /// address of the deployed registry contract
-  address registry = 0x0;
+  address constant registry = 0xfbbbf7b0f4bd8c57e518532f9273dd8d085da5ce;
   /// owner of this user contract
   address owner;
   /// the username associated with this contract
@@ -61,6 +64,7 @@ contract CapChatUser {
   event OneTimePreKeysUpdated(uint count);
   event SignedPreKeyUpdated();
   event Unauthorized(address from, string action);
+  event Print(address caddr);
 
   // functions
   /// returns this contract's the signed public prekey signature
@@ -179,7 +183,33 @@ contract CapChatUser {
       valid = valid && oneTimePreKeys[i] != bytes32(0);
   }
 
-  // register
+  /// registers this user contract with the registry
+  /// @return { "status": "whether or not this contract was registered" }
+  function register() returns (bool status) {
+    // only let this contract's owner register
+    if (msg.sender != owner) {
+      Unauthorized(msg.sender, 'register');
+      return false;
+    }
+    // only let valid contracts be registered
+    if (!isValid()) return false;
+    // get the address of the current logic contract
+    address logic = CapChatRegistry(registry).logicContract();
+    // register via the current logic contract
+    return Logic(logic).registerUser(username, this);
+  }
 
-  // deregister
+  /// deregisters this user contract with the registry
+  /// @return { "status": "whether or not this contract was registered" }
+  function deregister() returns (bool status) {
+    // only let this contract's owner deregister
+    if (msg.sender != owner) {
+      Unauthorized(msg.sender, 'deregister');
+      return false;
+    }
+    // get the address of the current logic contract
+    address logic = CapChatRegistry(registry).logicContract();
+    // deregister via the current logic contract
+    return Logic(logic).deregisterUser(username);
+  }
 }
