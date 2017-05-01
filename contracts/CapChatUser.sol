@@ -20,7 +20,7 @@ contract CapChatUser {
   /// @param _registrationID the registrationID for this contract
   /// @param _identityKey the long-term public identity key for this contract
   /// @param _signedPreKey the medium-term signed public prekey for this contract
-  /// @param _signedPreKeySig the signature of the public prekey
+  /// @param _signedPreKeySig the signature of the public prekey (signed with the identity key)
   /// @param _oneTimePreKeys an array of one-time prekeys
   function CapChatUser(
     bytes32 _username,
@@ -52,12 +52,15 @@ contract CapChatUser {
   event Unauthorized(address from, string action);
 
   // functions
-  // returns this contract's signedPreKeySig
-  function getSignedPreKeySig() constant returns (bytes32[2]) {
+  /// returns this contract's the signed public prekey signature
+  /// @return { "sig": "the signed public prekey signature" }
+  function getSignedPreKeySig() constant returns (bytes32[2] sig) {
     return signedPreKeySig;
   }
 
-  // updates this contract's signedPreKeySig
+  /// updates this contract's medium-term signed public prekey
+  /// @param _signedPreKey the new medium-term signed public prekey
+  /// @param _signedPreKeySig the signature of the new public prekey (signed with the identity key)
   function updateSignedPreKey(
     bytes32 _signedPreKey,
     bytes32[2] _signedPreKeySig
@@ -72,29 +75,31 @@ contract CapChatUser {
     SignedPreKeyUpdated();
   }
 
-  // adds the given address to the friends mapping
-  function addFriend(address friend) {
+  /// adds the given user contract address to this contract's `friends` mapping
+  /// @param caddr the user contract address of the friend to be added
+  function addFriend(address caddr) {
     // only let this contract's owner add friends
     if (msg.sender != owner) {
       Unauthorized(msg.sender, 'addFriend');
       return;
     }
-    friends[friend] = true;
-    FriendAdded(friend);
+    friends[caddr] = true;
+    FriendAdded(caddr);
   }
 
-  // removes the given address from the friends mapping
-  function removeFriend(address friend) {
+  /// removes the given user contract address to this contract's `friends` mapping
+  /// @param caddr the user contract address of the friend to be removed
+  function removeFriend(address caddr) {
     // only let this contract's owner remove friends
     if (msg.sender != owner) {
       Unauthorized(msg.sender, 'removeFriend');
       return;
     }
-    delete friends[friend];
-    FriendRemoved(friend);
+    delete friends[caddr];
+    FriendRemoved(caddr);
   }
 
-  // returns a key from oneTimePreKeys via an event
+  /// issues a single one-time prekey from this contract's `oneTimePreKeys` array
   function getOneTimePreKey() {
     // only let this contract's friends to get a key
     if (!friends[msg.sender]) {
@@ -114,7 +119,8 @@ contract CapChatUser {
       OneTimePreKeysLow(remaining);
   }
 
-  // supplements oneTimePreKeys with more keys
+  /// adds an array of new one-time prekeys to this contract's `oneTimePreKeys` array
+  /// @param _oneTimePreKeys the array of new one-time prekeys
   function addOneTimePreKeys(bytes32[] _oneTimePreKeys) {
     // only let this contract's owner add keys
     if (msg.sender != owner) {
@@ -137,7 +143,10 @@ contract CapChatUser {
     OneTimePreKeysUpdated(oneTimePreKeys.length);
   }
 
-  // returns whether or not this contract is in a valid state
+  /// checks the validity of this contract
+  /// @dev a contract is valid when the fields set in the contractor are no longer the initial values (i.e. `0x0`).
+  /// @dev  additionally, `oneTimePreKeys` must contain at least three keys.
+  /// @return { "valid": "whether or not this contract is valid" }
   function isValid() constant returns (bool valid) {
     // set most checks
     valid =
