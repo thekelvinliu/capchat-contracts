@@ -6,27 +6,27 @@ developed and deployed with [truffle](http://truffleframework.com/).
 see the [doxity](https://github.com/DigixGlobal/doxity)-generated documentation [here](https://thekelvinliu.github.io/capchat-contracts/).
 
 ## todo
-- [ ] write integration tests
-- [ ] document everything
 
 ### `CapChatLogic`
-- [ ] write unit tests
-- [ ] hard code deployed registry address
-- [ ] versioning
-- [ ] register a username with an address
-- [ ] get the address of a given username
-- [ ] deregister a given username
-- [ ] hard code deployed registry address
+- [x] hard code deployed registry address
+- [x] versioning
+- [x] register a username with an address
+- [x] get the address of a given username
+- [x] deregister a given username
+- [ ] write integration tests
+- [ ] add events
 
 ### `CapChatRegistry`
 - [x] write unit tests
 - [x] add events
 - [x] only allow current backend logic contract to read/write the user mapping
-- [ ] deploy
+- [x] deploy locally
+- [ ] deploy on testnet
 
 ### `CapChatUser`
+- [x] hard code deployed registry address
 - [x] update unit tests
-- [ ] hard code deployed registry address
+- [ ] write integration tests
 
 ## about
 capchat is my computer science capstone/senior project.
