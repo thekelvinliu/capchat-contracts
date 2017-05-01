@@ -1,77 +1,48 @@
 pragma solidity ^0.4.8;
 
-/// @title CapChatRegistry
+import './CapChatRegistry.sol';
+import './Logic.sol';
+
+/// @title CapChatLogic
 /// @author thekelvinliu <kelvin@thekelvinliu.com>
-contract CapChatLogic {
+contract CapChatLogic is Logic {
   // variables
   /// address of the deployed registry contract
-  address registry = 0x0;
+  address constant registry = 0xfbbbf7b0f4bd8c57e518532f9273dd8d085da5ce;
   /// the owner of this logic contract
   address owner;
   /// the semantic version number of this contract
   uint8[3] version;
 
   // constructor
-  function CapChatLogic() {
+  /// initializes a logic contract
+  /// @param major the major version of this contract
+  /// @param minor the minor version of this contract
+  /// @param patch the patch version of this contract
+  function CapChatLogic(uint8 major, uint8 minor, uint8 patch) {
     owner = msg.sender;
+    version[0] = major;
+    version[1] = minor;
+    version[2] = patch;
   }
-
-  // events
 
   // functions
-  function registerUser(bytes32 username, address caddr) {
-
+  /// adds the given username and user contract to the registry contract
+  /// @param username the username
+  /// @param caddr the user contract
+  function registerUser(bytes32 username, address caddr) returns (bool status) {
+    return CapChatRegistry(registry).add(username, caddr);
   }
 
-  function deregisterUser(bytes32 username) {
+  /// gets the given username from the registry contract
+  /// @param username the username
+  function getUser(bytes32 username) returns (address caddr) {
+    return CapChatRegistry(registry).get(username);
+  }
 
+  /// removes the given username from the registry contract
+  /// @param username the username
+  function deregisterUser(bytes32 username) returns (bool status) {
+    return CapChatRegistry(registry).remove(username);
   }
 }
-//   // variables
-//   // semantic versioning
-//   uint[3] version;
-
-//   // events
-//   event Registration(string un, address caddr);
-//   event RegistrationFailed(string un, address caddr);
-//   event RegistrationPassed(string un, address caddr);
-//   event Unregistered(string un, address caddr);
-
-//   // modifiers
-//   modifier notRegistered(string un) { if (!isRegistered(un)) _; }
-
-//   // private functions
-//   // returns true if the given username is valid otherwise false
-//   function validUsername(string un) notRegistered(un) returns (bool) {
-//     return bytes(un).length > 0;
-//   }
-
-//   // public functions
-//   // returns true if the given username is registered otherwise false
-//   function isRegistered(string un) returns (bool) {
-//     return users[un] != address(0x0);
-//   }
-//   // registers the given username and address and returns status
-//   function register(string un, address caddr) returns (bool status) {
-//     Registration(un, caddr);
-//     // TODO: add some sort of validation
-//     // CapChatUser user = CapChatUser(msg.sender);
-//     // user.isValid()???
-//     if (!validUsername(un) || caddr == address(0x0)) {
-//       RegistrationFailed(un, caddr);
-//       status = false;
-//     } else {
-//       RegistrationPassed(un, caddr);
-//       users[un] = caddr;
-//       status = true;
-//     }
-//   }
-//   // unregisters the given username and returns status
-//   // TODO: CHECK THIS
-//   function unregister(string un, address caddr) returns (bool) {
-//     if (users[un] != msg.sender) return false;
-//     users[un] = address(0x0);
-//     Unregistered(un, msg.sender);
-//     return true;
-//   }
-// }
