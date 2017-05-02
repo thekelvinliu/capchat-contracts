@@ -4,6 +4,8 @@ const CapChatUser = artifacts.require('./CapChatUser.sol');
 const keys = require('signal-protocol').KeyHelper;
 
 contract('CapChatUser', accounts => {
+  // copy accounts
+  const testAddrs = accounts.slice();
   // mock data
   const emptyKey = Buffer.from(new ArrayBuffer(32)).toString('hex');
   const NUM_OTPKS = 5;
@@ -40,7 +42,7 @@ contract('CapChatUser', accounts => {
     // iterate over test usernames
     Promise.all(['alice', 'bob'].map(async un => {
       // gather user information and generate keys
-      const account = accounts.pop();
+      const account = testAddrs.pop();
       const username = un;
       const registrationID = keys.generateRegistrationId();
       const identityKey = await keys.generateIdentityKeyPair();
@@ -170,7 +172,7 @@ contract('CapChatUser', accounts => {
         ]
       };
       // iterate over accounts
-      await Promise.all(accounts.map(async acc => {
+      await Promise.all(testAddrs.map(async acc => {
         // update the contract using new content
         const res = await user.instance.updateSignedPreKey(
           `0x${strings.signedPreKey}`,
@@ -208,7 +210,7 @@ contract('CapChatUser', accounts => {
       }))
     );
     it('does not allow anyone but the contract owner to add a friend', () =>
-      Promise.all(accounts.map(async acc => {
+      Promise.all(testAddrs.map(async acc => {
         const user = alice;
         // try to add to the friends list
         const res = await user.instance.addFriend(
@@ -241,7 +243,7 @@ contract('CapChatUser', accounts => {
       assert.equal(res.logs[0].args.friend, friend.account);
     });
     it('does not allow anyone but the contract owner to remove a friend', () =>
-      Promise.all(accounts.map(async acc => {
+      Promise.all(testAddrs.map(async acc => {
         // try to remove from the friends list
         const res = await user.instance.removeFriend(
           web3.toBigNumber(acc),
@@ -295,7 +297,7 @@ contract('CapChatUser', accounts => {
       }
     });
     it('only allows friends to get keys', () =>
-      Promise.all(accounts.map(async acc => {
+      Promise.all(testAddrs.map(async acc => {
         // try to get a key
         const res = await user.instance.getOneTimePreKey({
           from: acc
@@ -398,7 +400,7 @@ contract('CapChatUser', accounts => {
           .map(otpk => Buffer.from(otpk.keyPair.pubKey, 1).toString('hex'))
       };
       // iterate over accounts
-      await Promise.all(accounts.map(async acc => {
+      await Promise.all(testAddrs.map(async acc => {
         // update the contract using new content
         const res = await user.instance.addOneTimePreKeys(
           strings.oneTimePreKeys,

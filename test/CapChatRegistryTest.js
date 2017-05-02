@@ -4,10 +4,12 @@ const CapChatRegistry = artifacts.require('./CapChatRegistry.sol');
 const crypto = require('crypto');
 
 contract('CapChatRegistry', accounts => {
+  // copy accounts
+  const testAddrs = accounts.slice();
   // mock data
-  const owner = accounts.pop();
-  const initLogic = accounts.pop();
-  const newLogic = accounts.pop();
+  const owner = testAddrs.pop();
+  const initLogic = testAddrs.pop();
+  const newLogic = testAddrs.pop();
   const zero = `0x${Buffer.alloc(20).toString('hex')}`;
   let alice;
   let bob;
@@ -62,7 +64,7 @@ contract('CapChatRegistry', accounts => {
       const addr = await crypto.randomBytes(20);
       const newLogic = `0x${addr.toString('hex')}`;
       // update from all accounts
-      await Promise.all(accounts.map(async acc => {
+      await Promise.all(testAddrs.map(async acc => {
         const res = await ccr.updateLogic(newLogic, { from: acc });
         // assert the update failed
         assert.lengthOf(res.logs, 1);
@@ -94,7 +96,7 @@ contract('CapChatRegistry', accounts => {
       }))
     );
     it('does not allow anyone but the current logic contract to add', () =>
-      Promise.all(accounts.map(async acc => {
+      Promise.all(testAddrs.map(async acc => {
         const user = alice;
         // try to map username to address
         const res = await ccr.add(
@@ -125,7 +127,7 @@ contract('CapChatRegistry', accounts => {
       }))
     );
     it('does not allow anyone but the current logic contract to get', () =>
-      Promise.all(accounts.map(async acc => {
+      Promise.all(testAddrs.map(async acc => {
         const user = bob;
         // try to get
         const caddr = await ccr.get(
@@ -163,7 +165,7 @@ contract('CapChatRegistry', accounts => {
       }))
     );
     it('does not allow anyone but the current logic contract to remove', () =>
-      Promise.all(accounts.map(async acc => {
+      Promise.all(testAddrs.map(async acc => {
         const user = alice;
         // try to map username to address
         const res = await ccr.remove(
