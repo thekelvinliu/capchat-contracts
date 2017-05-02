@@ -8,9 +8,10 @@ contract('Integrations', accounts => {
   // copy accounts
   const testAddrs = accounts.slice(1);
   // the deployed registry
-  const CCR = CapChatRegistry.at('0x14d493280bcd6499793ca8ec5c2a3a76f8e87cae');
+  const CCR = CapChatRegistry.at('0x3eca25eb61b362aa7b1b204e0e68803925a0cfb2');
   const NUM_OTPKS = 5;
   const owner = accounts[0];
+  const zero = `0x${Buffer.alloc(20).toString('hex')}`;
   let alice;
   let bob;
   let logic;
@@ -93,43 +94,37 @@ contract('Integrations', accounts => {
   });
 
   describe('users', () => {
-    it('can register, lookup, an deregister');
-    // it('can register', async () => {
-    //   // register users
-    //   await alice.instance.register({ from: alice.account });
-    //   await bob.instance.register({ from: bob.account });
-    //   // check events
-    //   const events = await new Promise((resolve, reject) => {
-    //     const filter = CCR.allEvents({
-    //       fromBlock: 0,
-    //       toBlock: 'latest'
-    //     });
-    //     filter.get((err, logs) => (err) ? reject(err) : resolve(logs));
-    //   });
-    //   const added = events.filter(e => e.event === 'MappingAdded');
-    //   // assert that the addresses are correct
-    //   // assert.equal(added[0].args.caddr, alice.instance.address);
-    //   // assert.equal(added[1].args.caddr, bob.instance.address);
-    //   // have alice look up bob
-    //   let user = alice;
-    //   let other = bob;
-    //   const res = await alice.instance.find(
-    //     `0x${Buffer.from(other.username).toString('hex')}`,
-    //     { from: alice.account }
-    //   );
-    //   assert.equal(added[1].args.caddr, res);
-    // });
-    // it('can lookup', async () => {
-    //   // have alice look up bob
-    //   let user = alice;
-    //   let other = bob;
-    //   const res = await alice.instance.find(
-    //     `0x${Buffer.from(other.username).toString('hex')}`,
-    //     { from: alice.account }
-    //   );
-    //   console.log(res);
-    //   // have bob look up alice
-    // });
-    // it('can deregister');
+    it('can register, lookup, an deregister', async () => {
+      // some local variables
+      const aliceBuf = `0x${Buffer.from(alice.username).toString('hex')}`;
+      const bobBuf = `0x${Buffer.from(bob.username).toString('hex')}`;
+      let res;
+      // register users
+      await Promise.all([alice, bob].map(user => user.instance.register({
+        from: user.account
+      })));
+      // have alice and bob look up one another
+      assert.equal(
+        await alice.instance.find(bobBuf, { from: alice.account }),
+        bob.instance.address
+      );
+      assert.equal(
+        await bob.instance.find(aliceBuf, { from: bob.account }),
+        alice.instance.address
+      );
+      // deregister users
+      await Promise.all([alice, bob].map(user => user.instance.deregister({
+        from: user.account
+      })));
+      // should now be zero
+      assert.equal(
+        await alice.instance.find(bobBuf, { from: alice.account }),
+        zero
+      );
+      assert.equal(
+        await bob.instance.find(aliceBuf, { from: bob.account }),
+        zero
+      );
+    });
   });
 });

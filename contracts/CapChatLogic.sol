@@ -8,7 +8,7 @@ import './Logic.sol';
 contract CapChatLogic is Logic {
   // variables
   /// address of the deployed registry contract
-  address constant registry = 0x14d493280bcd6499793ca8ec5c2a3a76f8e87cae;
+  address constant registry = 0x3eca25eb61b362aa7b1b204e0e68803925a0cfb2;
   /// the owner of this logic contract
   address owner;
   /// the semantic version number of this contract
