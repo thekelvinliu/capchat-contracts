@@ -8,7 +8,7 @@ import './Logic.sol';
 contract CapChatLogic is Logic {
   // variables
   /// address of the deployed registry contract
-  address constant registry = 0xfbbbf7b0f4bd8c57e518532f9273dd8d085da5ce;
+  address constant registry = 0x14d493280bcd6499793ca8ec5c2a3a76f8e87cae;
   /// the owner of this logic contract
   address owner;
   /// the semantic version number of this contract
@@ -38,7 +38,7 @@ contract CapChatLogic is Logic {
   /// gets the given username from the registry contract
   /// @param username the username
   /// @return { "caddr": "the corresponding user contract address" }
-  function getUser(bytes32 username) returns (address caddr) {
+  function getUser(bytes32 username) constant returns (address caddr) {
     return CapChatRegistry(registry).get(username);
   }
 

@@ -8,7 +8,7 @@ import './Logic.sol';
 contract CapChatUser {
   // variables
   /// address of the deployed registry contract
-  address constant registry = 0xfbbbf7b0f4bd8c57e518532f9273dd8d085da5ce;
+  address constant registry = 0x14d493280bcd6499793ca8ec5c2a3a76f8e87cae;
   /// owner of this user contract
   address owner;
   /// the username associated with this contract
@@ -197,6 +197,21 @@ contract CapChatUser {
     address logic = CapChatRegistry(registry).logicContract();
     // register via the current logic contract
     return Logic(logic).registerUser(username, this);
+  }
+
+  /// finds the the associated user contract address for the given username
+  /// @param username the username
+  /// @return { "caddr": "the associated user contract address" }
+  function find(bytes32 username) constant returns (address caddr) {
+    // only let this contract's owner find
+    if (msg.sender != owner) {
+      Unauthorized(msg.sender, 'find');
+      return;
+    }
+    // get the address of the current logic contract
+    address logic = CapChatRegistry(registry).logicContract();
+    // get user contract address via the current logic contract
+    return Logic(logic).getUser(username);
   }
 
   /// deregisters this user contract with the registry
