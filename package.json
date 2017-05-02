@@ -1,6 +1,6 @@
 {
   "name": "capchat-contracts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ethereum smart contracts for capchat",
   "main": "index.js",
   "repository": "git@github.com:thekelvinliu/capchat-contracts.git",
