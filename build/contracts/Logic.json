@@ -1,0 +1,67 @@
+{
+  "contract_name": "Logic",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "username",
+          "type": "bytes32"
+        },
+        {
+          "name": "caddr",
+          "type": "address"
+        }
+      ],
+      "name": "registerUser",
+      "outputs": [
+        {
+          "name": "status",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "username",
+          "type": "bytes32"
+        }
+      ],
+      "name": "deregisterUser",
+      "outputs": [
+        {
+          "name": "status",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "username",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getUser",
+      "outputs": [
+        {
+          "name": "caddr",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "type": "function"
+    }
+  ],
+  "unlinked_binary": "0x606060405234610000575b61010c806100196000396000f300606060405263ffffffff60e060020a6000350416633926747981146036578063475469701460705780636517579c146091575b6000565b34600057605c60043573ffffffffffffffffffffffffffffffffffffffff6024351660c7565b604080519115158252519081900360200190f35b34600057605c60043560d0565b604080519115158252519081900360200190f35b34600057609e60043560d0565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005b92915050565b60005b919050565b60005b9190505600a165627a7a72305820ecbf8cab8726707d95fe0924cfb1c76ddda26fbfa2baf46ae3ea92d802a25f770029",
+  "networks": {},
+  "schema_version": "0.0.5",
+  "updated_at": 1494770009124
+}
