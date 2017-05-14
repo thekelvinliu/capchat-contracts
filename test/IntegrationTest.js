@@ -8,7 +8,7 @@ contract('Integrations', accounts => {
   // copy accounts
   const testAddrs = accounts.slice(1);
   // the deployed registry
-  const CCR = CapChatRegistry.at('0x3eca25eb61b362aa7b1b204e0e68803925a0cfb2');
+  const CCR = CapChatRegistry.at('0x84f1ac740f64a034b0609f29d103d4aeb286cbf1');
   const NUM_OTPKS = 5;
   const owner = accounts[0];
   const zero = `0x${Buffer.alloc(20).toString('hex')}`;
@@ -73,6 +73,7 @@ contract('Integrations', accounts => {
         user.strings.oneTimePreKeys.map(otpk => `0x${otpk}`),
         { from: user.account }
       );
+      console.log(`${user.username}'s account is ${user.account}, contract is ${user.instance.address}`);
       // save the object
       eval(`${un} = user`);
     }))

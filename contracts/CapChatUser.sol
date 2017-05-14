@@ -8,7 +8,7 @@ import './Logic.sol';
 contract CapChatUser {
   // variables
   /// address of the deployed registry contract
-  address constant registry = 0x3eca25eb61b362aa7b1b204e0e68803925a0cfb2;
+  address constant registry = 0x84f1ac740f64a034b0609f29d103d4aeb286cbf1;
   /// owner of this user contract
   address owner;
   /// the username associated with this contract

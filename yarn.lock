@@ -3,8 +3,8 @@
 
 
 "@digix/doxity@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@digix/doxity/-/doxity-0.4.4.tgz#ab898b695d8ba3a0afb7675c5f77c5130ed982f5"
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/@digix/doxity/-/doxity-0.4.6.tgz#d33b7889134ca892c8e8f3c12de0f9d398039d7e"
   dependencies:
     glob "^7.1.1"
     keccakjs "^0.2.1"
@@ -15,7 +15,7 @@
     tar.gz "^1.0.5"
     toml "^2.3.0"
     tomlify-j0.4 "^1.0.1"
-    truffle-compile "^1.1.2"
+    truffle-compile "^2.0.0"
     truffle-config "0.0.7"
     truffle-resolver "^3.0.0"
 
@@ -24,8 +24,8 @@
   resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.3.29.tgz#7f2ad7ec55f914482fc9b1ec4bb1ae6028d46066"
 
 "@types/node@^6", "@types/node@^6.0.45":
-  version "6.0.71"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.71.tgz#aa49e0109e35f1457867b45822caf7f4883ca248"
+  version "6.0.73"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-6.0.73.tgz#85dc4bb6f125377c75ddd2519a1eeb63f0a4ed70"
 
 ajv@^4.9.1:
   version "4.11.8"
@@ -109,7 +109,7 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-brace-expansion@^1.0.0:
+brace-expansion@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.7.tgz#3effc3c50e000531fb720eaff80f0ae8ef23cf59"
   dependencies:
@@ -596,10 +596,10 @@ minimatch@0.3:
     sigmund "~1.0.0"
 
 "minimatch@2 || 3", minimatch@^3.0.2:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.3.tgz#2a4e4090b96b2db06a9d7df01055a62a77c9b774"
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.0.4.tgz#5166e286457f03306064be5497e8dbb0c3d32083"
   dependencies:
-    brace-expansion "^1.0.0"
+    brace-expansion "^1.1.7"
 
 minimist@0.0.8:
   version "0.0.8"
@@ -653,8 +653,8 @@ node-dir@^0.1.16:
     minimatch "^3.0.2"
 
 node-webcrypto-ossl@^1.0.15:
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/node-webcrypto-ossl/-/node-webcrypto-ossl-1.0.21.tgz#70567a5dc09f36bd78682eb72c7e1437a137b6bf"
+  version "1.0.23"
+  resolved "https://registry.yarnpkg.com/node-webcrypto-ossl/-/node-webcrypto-ossl-1.0.23.tgz#7dc0b96f1bf3ad375abcda6d2a365de9964c0436"
   dependencies:
     "@types/mkdirp" "^0.3.29"
     "@types/node" "^6.0.45"
@@ -662,7 +662,7 @@ node-webcrypto-ossl@^1.0.15:
     nan "^2.5.1"
     tslib "^1.5.0"
     typescript "^2"
-    webcrypto-core "^0"
+    webcrypto-core "^0.1.15"
 
 normalize-package-data@^2.3.2:
   version "2.3.8"
@@ -884,9 +884,9 @@ sntp@1.x.x:
   dependencies:
     hoek "2.x.x"
 
-solc@0.4.8:
-  version "0.4.8"
-  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.8.tgz#96abbee1266341ae97fb4bdc3abcc9bc1b5052ab"
+solc@0.4.11:
+  version "0.4.11"
+  resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.11.tgz#2522eb43e7c0419bac2060b96e20a2593bfb5e8b"
   dependencies:
     fs-extra "^0.30.0"
     memorystream "^0.3.1"
@@ -1011,14 +1011,14 @@ truffle-blockchain-utils@0.0.1:
   dependencies:
     web3 "^0.18.0"
 
-truffle-compile@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/truffle-compile/-/truffle-compile-1.1.2.tgz#d2e2e6b8cc52fc49447405f930c0d8346ea85db8"
+truffle-compile@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/truffle-compile/-/truffle-compile-2.0.2.tgz#fa00c125eca4ef1986c628e15b12d1667591da03"
   dependencies:
     async "^2.1.4"
     colors "^1.1.2"
     graphlib "^2.1.1"
-    solc "0.4.8"
+    solc "0.4.11"
     solidity-parser "^0.3.0"
     truffle-config "0.0.7"
     truffle-contract-sources "^0.0.1"
@@ -1084,8 +1084,8 @@ truffle-resolver@^3.0.0:
     truffle-provisioner "^0.1.0"
 
 tslib@^1.5.0:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.6.1.tgz#b77b09abc5fa4935e157d838b80e36dad47152c4"
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.7.0.tgz#6e8366695f72961252b35167b0dd4fbeeafba491"
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
@@ -1132,7 +1132,7 @@ web3@^0.18.0:
     xhr2 "*"
     xmlhttprequest "*"
 
-webcrypto-core@^0:
+webcrypto-core@^0.1.15:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/webcrypto-core/-/webcrypto-core-0.1.15.tgz#946fe1680e4281c47f7f56e0e945367d17d9a0ce"
   dependencies:
