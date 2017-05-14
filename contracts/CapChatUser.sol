@@ -64,7 +64,6 @@ contract CapChatUser {
   event OneTimePreKeysUpdated(uint count);
   event SignedPreKeyUpdated();
   event Unauthorized(address from, string action);
-  event Print(address caddr);
 
   // functions
   /// returns this contract's the signed public prekey signature
